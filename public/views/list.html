@@ -1,0 +1,101 @@
+
+<div ng-controller="firstCtrl as todo">
+    <nav class="navbar navbar-default navbar-fixed-top">
+	    <div class="conatiner-fluid">
+            <div class="navbar-header">
+      	        <a class="navbar-brand" href="#">Todo App</a>
+            </div>
+             <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                      <div class="dropdown-toggle" data-toggle="dropdown" style="margin-top:10px; color:black">
+                        &nbsp; &nbsp;<img src="{{todo.user.photoURL}}" class="img-circle image">&nbsp; &nbsp; Hi, {{todo.dName}}<!--<span class="caret"></span>-->&nbsp; &nbsp; &nbsp;<button class="btn btn-default" ng-click="todo.signOut()">Sign out</button>&nbsp; &nbsp; &nbsp; &nbsp;
+                    </div> 
+                    <ul class="dropdown-menu">
+                        <li><a href="#">Sign Out</a></li>
+                    </ul>
+                </li>
+            </ul>
+      	    <form class="navbar-form navbar-right">
+  		        <div class="input-group">
+    		        <input type="text" class="form-control" ng-model="todo.search" style="margin-top: 10px; margin-right: 19px" placeholder="Search">
+  		        </div>
+            </form>
+           
+  	    </div>
+    </nav>    
+    <br><br><br>
+    <div class="brownhill ">{{todo.name}} List</div>
+        <br>
+             <div class="row">
+                 <div class="col-xs-offset-2 col-xs-4">
+                     <input type="text" class="form-control " ng-model="todo.task" >
+                 </div>
+                 <div class="col-xs-4">
+                     <button ng-if="!todo.editMode" class="btn btn-success btn-block glyphicon glyphicon-plus task-btn" ng-click="todo.task && todo.addTask()">     Add Task</button>
+                     <button ng-if="todo.editMode" class="btn btn-info btn-block glyphicon glyphicon-pencil task-btn" ng-click="todo.task && todo.updateTask()">     Update Task</button>
+                 </div>
+
+
+             </div>
+             <div class="row">
+                 <div class="col-xs-12">
+                     <div class="bg-primary task row" >
+                         <div class="col-xs-5 row">
+                            <div class="col-xs-2">
+                                Show:
+                            </div>
+                            <div class="col-xs-2">
+                                <input type="radio" ng-model="todo.model" ng-value="{}" ng-checked="true"> All
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="radio" ng-model="todo.model" ng-value="{status:1}"> Completed
+                            </div>
+                            <div class="col-xs-3">
+                                <input type="radio" ng-model="todo.model" ng-value="{status:0}"> Pending
+                            </div>
+                        </div>
+                    </div>
+
+                     <div class="btn btn-primary btn-block task">{{todo.completedTasks}}/{{todo.totalTasks}} Tasks Completed</div>
+                     <ul class="list-group">
+                         
+                         <li class="list-group-item list-group-item-{{task.status?'success':'danger'}}" ng-repeat="task in todo.tasks | filter:todo.model | filter:todo.search">
+                             <div class="row">
+
+                                <div class="col-xs-8 disney2" ng-if="task.status==0" >
+                                     {{task.name}}
+                                </div>
+                                <div class="col-xs-8 disney2" ng-if="task.status==1" >
+                                    <s>{{task.name}}</s>
+                                </div>
+
+                                <div class="col-xs-4 row">
+                                    <div class="col-xs-offset-2 col-xs-2">
+                                        <button ng-if="task.status==0" class="btn btn-info btn-block glyphicon glyphicon-unchecked" ng-click="todo.setStatus(task.id)"></button>
+                                        <div ng-if="task.status==1" class="btn btn-success glyphicon glyphicon-check"></div>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-info btn-block glyphicon glyphicon-chevron-up" ng-click="todo.moveUp(task.id)"></button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-info btn-block glyphicon glyphicon-chevron-down" ng-click="todo.moveDown(task.id)"></button>
+                                    </div>
+                                    <div class="col-xs-2"> 
+                                        <button class="btn btn-warning btn-block glyphicon glyphicon-edit" ng-click="todo.editTask(task.id)"></button>
+                                    </div>
+                                    <div class="col-xs-2">
+                                        <button class="btn btn-danger btn-block glyphicon glyphicon-remove" ng-click="todo.deleteTask(task.id)"></button>
+                                    </div>
+
+                                </div>
+
+                             </div>
+                         </li>
+                         <!--<li class="list-group-item">Task2</li>-->
+                     </ul>
+                     
+                 </div>
+
+             </div>
+
+        </div>
